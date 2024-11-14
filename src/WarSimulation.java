@@ -1,0 +1,3 @@
+class WarSimulation extends Game {
+    
+}

@@ -1,0 +1,3 @@
+class Defend extends Action {
+    
+}
