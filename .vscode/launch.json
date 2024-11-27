@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "App",
+            "request": "launch",
+            "mainClass": "App",
+            "projectName": "WarGames_7cac6db9"
+        },
+        {
+            "type": "java",
             "name": "Current File",
             "request": "launch",
             "mainClass": "${file}"
@@ -16,7 +23,7 @@
             "request": "launch",
             "mainClass": "App",
             "projectName": "WarGames_d25c03c7",
-            "vmArgs": "--module-path \"C:\\Program Files\\Java\\javafx-sdk-22.0.2\\lib\" --add-modules javafx.controls,javafx.fxml --enable-preview"
+            "vmArgs": "--module-path C:\\Users\\dsphi\\Documents\\CSCI-3331\\javafx-sdk-22.0.2\\lib --add-modules javafx.controls,javafx.fxml --enable-preview"
         }
     ]
 }
