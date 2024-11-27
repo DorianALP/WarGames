@@ -1,3 +1,3 @@
-class Defend extends Action {
+class Defend extends GameAction {
     
 }
