@@ -1,0 +1,3 @@
+class Aim extends GameAction {
+    
+}
