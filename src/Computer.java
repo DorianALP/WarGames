@@ -1,15 +1,19 @@
 class Computer implements iPlay {
 
+    private Nation nation;
+
+    public Computer(Nation nation) {
+        this.nation = nation;
+    }
+
     @Override
     public GameAction chooseAction() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'chooseAction'");
+        // Implement AI logic to choose an action
+        return null; // Placeholder
     }
 
     @Override
     public Nation getNation() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getNation'");
+        return this.nation;
     }
-    
 }
