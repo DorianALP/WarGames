@@ -1,4 +1,4 @@
-class Computer extends Nation implements iPlay {
+class Computer implements iPlay {
 
     @Override
     public GameAction chooseAction() {

@@ -1,4 +1,4 @@
-class Player extends Nation implements iPlay {
+class Player implements iPlay {
 
     @Override
     public GameAction chooseAction() {
