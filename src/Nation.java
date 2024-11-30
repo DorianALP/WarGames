@@ -122,7 +122,9 @@ public class Nation {
 
         // Remaining damage reduces health
         health -= effectiveDamage;
-        if (health < 0) health = 0;
+        if (health < 0) {
+            health = 0;
+        }
 
         System.out.println(name + " took " + effectiveDamage + " damage. Remaining health: " + health);
     }
