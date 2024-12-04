@@ -2,6 +2,8 @@ class Player implements iPlay {
 
     private Nation nation;
 
+    private static final int MAX_ACTIONS = 2;
+
     public Player(Nation nation) {
         this.nation = nation;
     }
