@@ -1,15 +1,19 @@
-class Player extends Nation implements iPlay {
+class Player implements iPlay {
+
+    private Nation nation;
+
+    public Player(Nation nation) {
+        this.nation = nation;
+    }
 
     @Override
     public GameAction chooseAction() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'chooseAction'");
+        // Implement logic for the player to choose an action
+        return null; // Placeholder
     }
 
     @Override
     public Nation getNation() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getNation'");
+        return this.nation;
     }
-    
 }

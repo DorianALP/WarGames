@@ -1,0 +1,3 @@
+class Launch extends GameAction {
+    
+}
