@@ -1,29 +1,24 @@
-class Computer implements iPlay {
+import java.util.ArrayList;
+import java.util.List;
+
+public class Computer implements iPlay {
 
     private Nation nation;
-
     private Player player;
 
-    private boolean computerTurn = false;
     private boolean firstTurn = true;
+    private static final int MAX_ACTIONS = 2; // Two actions per turn
+    private int actionCount = 0;
 
-    private static final int MAX_ACTIONS = 2; // Two turns per move
-
-    public Computer(Nation nation) {
+    public Computer(Nation nation, Player player) {
         this.nation = nation;
-        firstTurn = true;
+        this.player = player;
     }
 
     @Override
-    public GameAction chooseAction() {
-        int TURN_COUNT = 0;
-        // Implement AI logic to choose an action
-        while(computerTurn && TURN_COUNT < MAX_ACTIONS) {
-            think();
-            TURN_COUNT++;
-        }
-        computerTurn = false;
-        return null; // Placeholder
+    public List<GameAction> chooseAction() {
+        List<GameAction> actions = think();
+        return actions;
     }
 
     @Override
@@ -31,30 +26,40 @@ class Computer implements iPlay {
         return this.nation;
     }
 
-    public GameAction think() {
-        // Check if it's the start of the game
-        if(firstTurn) {
+    public void resetTurnCount() {
+        this.actionCount = 0;
+    }
+
+    private List<GameAction> think() {
+        List<GameAction> actions = new ArrayList<>();
+
+        // Recruit soldiers on the first turn
+        if (firstTurn && actionCount < MAX_ACTIONS) {
+            actions.add(new RecruitSoldiersAction(nation, 5));
             firstTurn = false;
-            return new RecruitSoldiersAction(nation, 5);
+            actionCount++;
         }
 
-        // Computer health greater than or equal to player
-        if(this.nation.getHealth() >= player.getNation().getHealth()) {
-            if(this.nation.getNumNukes() > 0) {
-                return new LaunchNukeAction(this.nation, player.getNation());
-            } else if(this.nation.getNumNukes() == 0) {
-                return new BuildNukeAction(this.nation);
+        // Loop to pick two actions per turn
+        while (actionCount < MAX_ACTIONS) {
+            if (nation.getHealth() >= player.getNation().getHealth()) {
+                if (nation.getNumNukes() > 0) {
+                    actions.add(new LaunchNukeAction(nation, player.getNation()));
+                } else if (nation.getResources() >= 50) { // Assuming 50 resources to build a nuke
+                    actions.add(new BuildNukeAction(nation));
+                } else {
+                    actions.add(new CollectResourcesAction(nation, 10)); // Collect additional resources
+                }
+            } else {
+                if (nation.getShieldStrength() <= 25) {
+                    actions.add(new StrengthenShieldAction(nation, 15));
+                } else {
+                    actions.add(new DeploySoldiersAction(nation, player.getNation(), 5));
+                }
             }
+            actionCount++;
         }
 
-        // Computer health less than players
-        if(this.nation.getHealth() < player.getNation().getHealth()) {
-            // Check shield strength
-            if(this.nation.getShieldStrength() <= 25) {
-                return new StrengthenShieldAction(nation, 15);
-            }
-        }
-
-        return new RecruitSoldiersAction(nation, 5);
+        return actions;
     }
 }
