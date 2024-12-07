@@ -3,7 +3,7 @@ import java.util.List;
 
 public class Player implements iPlay {
     private Nation nation;
-    private static final int MAX_ACTIONS = 2;
+    public int MAX_ACTIONS = 2;
     private int actionCount = 0;
     private List<GameAction> actions = new ArrayList<>();
 
@@ -19,6 +19,10 @@ public class Player implements iPlay {
     @Override
     public Nation getNation() {
         return this.nation;
+    }
+
+    public int getActionCount() {
+        return actionCount;
     }
 
     public void addAction(GameAction action) {

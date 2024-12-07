@@ -7,19 +7,17 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-class WarSimulation {
-
+public class WarSimulation {
     private Player player;
     private Computer computer;
+    private Timeline gameLoop;
+    private Controller controller;
+    private boolean isPlayersTurn = false; // Starts with Computer's turn after Player's actions
 
-    Timeline gameLoop;
-
-    public WarSimulation() {
-        Nation playerNation = new Nation("America");
-        Nation computerNation = new Nation("Russia");
-
-        this.player = new Player(playerNation);
-        this.computer = new Computer(computerNation, player);
+    public WarSimulation(Player player, Computer computer, Controller controller) {
+        this.player = player;
+        this.computer = computer;
+        this.controller = controller;
     }
 
     void startGame(Stage stage) {
@@ -30,46 +28,58 @@ class WarSimulation {
 
         // Create a Timeline for the game loop
         gameLoop = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
-            // Player's Turn
-            List<GameAction> playerActions = player.chooseAction();
-            for (GameAction action : playerActions) {
-                action.execute(computer.getNation());
+            if(isPlayersTurn) {
+                // Player's Turn
+                List<GameAction> playerActions = player.chooseAction();
+                for (GameAction action : playerActions) {
+                    action.execute(computer.getNation());
+                    if (computer.getNation().isDefeated()) {
+                        System.out.println("Player wins!");
+                        stopGame(gameLoop);
+                        break;
+                    }
+                }
+
                 if (computer.getNation().isDefeated()) {
                     System.out.println("Player wins!");
                     stopGame(gameLoop);
-                    break;
+                    return;
                 }
-            }
 
-            if (computer.getNation().isDefeated()) {
-                System.out.println("Player wins!");
-                stopGame(gameLoop);
-                return;
-            }
+                player.resetTurnCount();
 
-            // Computer's Turn
-            List<GameAction> computerActions = computer.chooseAction();
-            for (GameAction action : computerActions) {
-                action.execute(player.getNation());
+                updateUI();
+
+                isPlayersTurn = false;
+
+            } else {
+
+                // Computer's Turn
+                List<GameAction> computerActions = computer.chooseAction();
+                for (GameAction action : computerActions) {
+                    action.execute(player.getNation());
+                    if (player.getNation().isDefeated()) {
+                        System.out.println("Computer wins!");
+                        stopGame(gameLoop);
+                        break;
+                    }
+                }
+
                 if (player.getNation().isDefeated()) {
                     System.out.println("Computer wins!");
                     stopGame(gameLoop);
-                    break;
+                    return;
                 }
+
+                // Reset action counts for the next turn
+                player.resetTurnCount();
+                computer.resetTurnCount();
+
+                // Update UI here to reflect changes
+                updateUI();
+
+                isPlayersTurn = true;
             }
-
-            if (player.getNation().isDefeated()) {
-                System.out.println("Computer wins!");
-                stopGame(gameLoop);
-                return;
-            }
-
-            // Reset action counts for the next turn
-            player.resetTurnCount();
-            computer.resetTurnCount();
-
-            // Update UI here to reflect changes
-            updateUI();
         }));
 
         gameLoop.setCycleCount(Timeline.INDEFINITE);

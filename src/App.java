@@ -31,8 +31,7 @@ public class App extends Application{
         scene.setOnKeyReleased(e -> {
             if(e.getCode().equals(KeyCode.ENTER)) {
                 if(response.getText().equals("Y")) {
-                    WarSimulation g = new WarSimulation();
-                    g.startGame(stage);
+                    new Controller(stage);
                 } else if (response.getText().equals("N")) {
                     stage.close();
                 }
