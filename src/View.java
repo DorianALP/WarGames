@@ -27,13 +27,12 @@ public class View {
         TextField response = new TextField();
         response.setBackground(Background.EMPTY);
         response.setStyle("-fx-text-fill: limegreen; -fx-font-size: 35px; -fx-font-family: 'Monospaced';");
-        response.setPromptText("Type Y or N and press ENTER...");
         response.setFocusTraversable(false);
 
         // Blinking cursor effect
         Timeline cursorBlink = new Timeline(new KeyFrame(Duration.seconds(0.5), e -> {
             if (response.getPromptText().isEmpty()) {
-                response.setPromptText("Type Y or N...");
+                response.setPromptText("Type Y or N and press ENTER...");
             } else {
                 response.setPromptText("");
             }
@@ -49,14 +48,17 @@ public class View {
 
         // Event handling for ENTER key
         response.setOnKeyReleased(e -> {
-            switch (response.getText().trim().toUpperCase()) {
-                case "Y":
-                    new Controller(stage); // Start the game
-                    cursorBlink.stop();
-                    break;
-                case "N":
-                    stage.close(); // Close the game
-                    break;
+            if (e.getCode().toString().equals("ENTER")) { // Trigger only on ENTER key
+                String input = response.getText().trim().toUpperCase();
+                switch (input) { // Convert input to uppercase
+                    case "Y":
+                        new Controller(stage); // Start the game
+                        cursorBlink.stop();
+                        break;
+                    case "N":
+                        stage.close(); // Close the game
+                        break;
+                }
             }
         });
 
