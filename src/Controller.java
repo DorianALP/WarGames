@@ -128,7 +128,6 @@ public class Controller {
     private void handleAction(Runnable action) {
         if (player.getActionCount() < player.MAX_ACTIONS) {
             action.run();
-            updateLabels();
 
             if (player.getActionCount() == player.MAX_ACTIONS) {
                 // Disable buttons until Computer's turn is complete
@@ -142,7 +141,6 @@ public class Controller {
 
     // Logs messages to the game log UI component.
     public void logAction(String message) {
-        System.out.println(message); // Console log
         gameLog.appendText(message + "\n"); // UI log
     }
 

@@ -7,8 +7,7 @@ public class CollectResourcesAction extends GameAction {
     }
 
     @Override
-    public void execute(Nation targetNation) {
-        nation.collectResources(amountToCollect);
-        System.out.println(nation.getName() + " collected " + amountToCollect + " resources. Total resources: " + nation.getResources());
+    public String execute(Nation targetNation) {
+        return nation.collectResources(amountToCollect);
     }
 }

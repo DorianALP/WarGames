@@ -9,9 +9,7 @@ class DeploySoldiersAction extends GameAction {
     }
 
     @Override
-    public void execute(Nation targetNation) {
-        nation.deploySoldiers(this.target, soldiersToDeploy);
-        System.out.println(nation.getName() + " deployed " + soldiersToDeploy + " soldiers to " + target.getName() + ". " + nation.getName() + "total soldiers left: " + nation.getNumSoldiers());
-
+    public String execute(Nation targetNation) {
+        return nation.deploySoldiers(this.target, soldiersToDeploy);
     }
 }

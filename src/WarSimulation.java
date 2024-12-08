@@ -23,22 +23,24 @@ public class WarSimulation {
     void startGame(Stage stage) {
         // Create a Timeline for the game loop
         gameLoop = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
+            // Update UI here to reflect changes
+            updateUI();
             if(isPlayersTurn) {
                 // Player's Turn
+                controller.enableActionButtons();
                 if(player.getActionCount() == 2) {
                     List<GameAction> playerActions = player.chooseAction();
                     for (GameAction action : playerActions) {
-                        action.execute(computer.getNation());
+                        controller.logAction(action.execute(computer.getNation()));;
                         if (computer.getNation().isDefeated()) {
-                            System.out.println("Player wins!");
+                            controller.logAction("Player wins!");
                             stopGame(gameLoop);
                             return;
                         }
                     }
 
+                    // Reset action counts for the next turn
                     player.resetTurnCount();
-
-                    updateUI();
 
                     isPlayersTurn = false;
                 } 
@@ -48,20 +50,16 @@ public class WarSimulation {
                 // Computer's Turn
                 List<GameAction> computerActions = computer.chooseAction();
                 for (GameAction action : computerActions) {
-                    action.execute(player.getNation());
+                    controller.logAction(action.execute(player.getNation()));
                     if (player.getNation().isDefeated()) {
-                        System.out.println("Computer wins!");
+                        controller.logAction("Computer wins!");
                         stopGame(gameLoop);
                         return;
                     }
                 }
 
                 // Reset action counts for the next turn
-                player.resetTurnCount();
                 computer.resetTurnCount();
-
-                // Update UI here to reflect changes
-                updateUI();
 
                 isPlayersTurn = true;
             }
@@ -74,6 +72,7 @@ public class WarSimulation {
     private void updateUI() {
         // Implement UI update logic to reflect the current state of the game
         // e.g., update labels, progress bars, etc.
+        controller.updateLabels();
     }
 
     private void stopGame(Timeline gameLoop) {
