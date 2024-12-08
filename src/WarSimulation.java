@@ -21,10 +21,6 @@ public class WarSimulation {
     }
 
     void startGame(Stage stage) {
-        Pane p = new Pane();
-        Scene s = new Scene(p, 1000, 500);
-        stage.setScene(s);
-        stage.setFullScreen(true);
 
         // Create a Timeline for the game loop
         gameLoop = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
