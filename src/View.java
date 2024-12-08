@@ -169,7 +169,7 @@ public class View {
         }));
     }
     
-    // Getters for UI components
+    // Getters for UI componentsnb  
     public VBox getMainLayout() {
         return mainLayout;
     }
