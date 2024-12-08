@@ -42,8 +42,11 @@ public class Controller {
     public static void updateLabels() {
         view.getPlayerResourcesLabel().setText("Player Resources: " + player.getNation().getResources());
         view.getPlayerSoldiersLabel().setText("Player Soldiers: " + player.getNation().getNumSoldiers());
+        view.getPlayerShieldLabel().setText("Player Shield: " + player.getNation().getShieldStrength());
+
         view.getComputerResourcesLabel().setText("Computer Resources: " + computer.getNation().getResources());
         view.getComputerSoldiersLabel().setText("Computer Soldiers: " + computer.getNation().getNumSoldiers());
+        view.getComputerShieldLabel().setText("Computer Shield: " + computer.getNation().getShieldStrength());
     }
 
 

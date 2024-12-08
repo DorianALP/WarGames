@@ -231,4 +231,12 @@ public class View {
     public Label getComputerSoldiersLabel() {
         return computerSoldiersLabel;
     }
+
+    public Label getComputerShieldLabel() {
+        return computerShieldLabel;
+    }
+
+    public Label getPlayerShieldLabel() {
+        return playerShieldLabel;
+    }
 }
