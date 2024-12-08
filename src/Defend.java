@@ -1,3 +1,0 @@
-class Defend extends GameAction {
-    
-}
