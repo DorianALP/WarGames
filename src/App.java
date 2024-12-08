@@ -6,12 +6,14 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) {
-        View view = new View();
-        Scene startupScene = view.createStartupScreen(stage); // Call the method from View
+        Nation playerNation = new Nation("America");
+        Nation computerNation = new Nation("Russia");
+        Player player = new Player(playerNation);
+        Computer computer = new Computer(computerNation, player);
+        View view = new View(player, computer, stage);
 
         // Stage setup
         stage.setTitle("WarGames Startup");
-        stage.setScene(startupScene);
         stage.setFullScreen(true);
         stage.setFullScreenExitHint("");
         stage.show();
