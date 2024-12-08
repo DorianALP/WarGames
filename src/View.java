@@ -11,11 +11,11 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class View {
-    private Button collectResourcesButton, recruitSoldiersButton, buildNukeButton, launchNukeButton;
+    private Button collectResourcesButton, recruitSoldiersButton, buildNukeButton, launchNukeButton, strengthenShieldButton;
     private TextArea gameLog;
 
-    private Label playerHealthLabel, playerResourcesLabel, playerSoldiersLabel;
-    private Label computerHealthLabel, computerResourcesLabel, computerSoldiersLabel;
+    private Label playerHealthLabel, playerResourcesLabel, playerSoldiersLabel, playerShieldLabel;
+    private Label computerHealthLabel, computerResourcesLabel, computerSoldiersLabel, computerShieldLabel;
 
     private ProgressBar playerHealthBar, computerHealthBar;
 
@@ -41,6 +41,7 @@ public class View {
         recruitSoldiersButton.setOnAction(e -> Controller.handleAction(() -> Controller.recruitSoldiers()));
         buildNukeButton.setOnAction(e -> Controller.handleAction(() -> Controller.buildNuke()));
         launchNukeButton.setOnAction(e -> Controller.handleAction(() -> Controller.launchNuke()));
+        strengthenShieldButton.setOnAction(e -> Controller.handleAction(() -> Controller.strengthenShield()));
     }
 
     // Initialize UI Components
@@ -49,6 +50,7 @@ public class View {
         recruitSoldiersButton = new Button("Recruit Soldiers");
         buildNukeButton = new Button("Build Nuke");
         launchNukeButton = new Button("Launch Nuke");
+        strengthenShieldButton = new Button("Strengthen Shield");
 
         playerHealthBar = new ProgressBar(1);
         computerHealthBar = new ProgressBar(1);
@@ -56,10 +58,13 @@ public class View {
         playerHealthLabel = new Label("Health: 100%");
         playerResourcesLabel = new Label("Resources: 100");
         playerSoldiersLabel = new Label("Soldiers: 0");
+        playerShieldLabel = new Label("Shield: 100");
 
         computerHealthLabel = new Label("Health: 100%");
         computerResourcesLabel = new Label("Resources: 100");
         computerSoldiersLabel = new Label("Soldiers: 0");
+        computerShieldLabel = new Label("Shield: 100");
+
 
         gameLog = new TextArea();
         gameLog.setEditable(false);
@@ -151,10 +156,10 @@ public class View {
         BorderPane root = new BorderPane();
         root.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, null, null)));
 
-        VBox playerBox = createNationBox("Player Nation: America", playerHealthBar, playerHealthLabel, playerResourcesLabel, playerSoldiersLabel);
-        VBox computerBox = createNationBox("Computer Nation: Russia", computerHealthBar, computerHealthLabel, computerResourcesLabel, computerSoldiersLabel);
+        VBox playerBox = createNationBox("Player Nation: America", playerHealthBar, playerHealthLabel, playerResourcesLabel, playerSoldiersLabel, playerShieldLabel);
+        VBox computerBox = createNationBox("Computer Nation: Russia", computerHealthBar, computerHealthLabel, computerResourcesLabel, computerSoldiersLabel, computerShieldLabel);
 
-        HBox buttonBox = new HBox(10, collectResourcesButton, recruitSoldiersButton, buildNukeButton, launchNukeButton);
+        HBox buttonBox = new HBox(10, collectResourcesButton, recruitSoldiersButton, buildNukeButton, launchNukeButton, strengthenShieldButton);
         buttonBox.setAlignment(Pos.CENTER);
 
         root.setLeft(playerBox);
@@ -181,12 +186,15 @@ public class View {
         playerHealthLabel.setText("Health: " + player.getNation().getHealth());
         playerResourcesLabel.setText("Resources: " + player.getNation().getResources());
         playerSoldiersLabel.setText("Soldiers: " + player.getNation().getNumSoldiers());
+        playerShieldLabel.setText("Shield: " + player.getNation().getShieldStrength());
         playerHealthBar.setProgress(player.getNation().getHealth() / 100.0);
 
         computerHealthLabel.setText("Health: " + computer.getNation().getHealth());
         computerResourcesLabel.setText("Resources: " + computer.getNation().getResources());
         computerSoldiersLabel.setText("Soldiers: " + computer.getNation().getNumSoldiers());
+        computerShieldLabel.setText("Shield: " + computer.getNation().getShieldStrength());
         computerHealthBar.setProgress(computer.getNation().getHealth() / 100.0);
+
     }
 
     public TextArea getGameLog() {
@@ -195,6 +203,10 @@ public class View {
 
     public Button getCollectResourcesButton() {
         return collectResourcesButton;
+    }
+
+    public Button getStrengthenShieldButton() {
+        return strengthenShieldButton;
     }
 
     public Button getRecruitSoldiersButton() {
@@ -223,6 +235,13 @@ public class View {
 
     public Label getComputerSoldiersLabel() {
         return computerSoldiersLabel;
+    }
+
+    public Label getComputerShieldLabel() {
+        return computerShieldLabel;
+    }
+    public Label getPlayerShieldLabel() {
+        return playerShieldLabel;
     }
 
     

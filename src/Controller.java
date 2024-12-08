@@ -56,7 +56,7 @@ public class Controller {
         view.getRecruitSoldiersButton().setDisable(true);
         view.getBuildNukeButton().setDisable(true);
         view.getLaunchNukeButton().setDisable(true);
-        view.getStrengthenShieldButon().setDisable(true);
+        view.getStrengthenShieldButton().setDisable(true);
     }
 
     // Enables all action buttons for the Player's turn.
@@ -65,7 +65,7 @@ public class Controller {
         view.getRecruitSoldiersButton().setDisable(false);
         view.getBuildNukeButton().setDisable(false);
         view.getLaunchNukeButton().setDisable(false);
-        view.getStrengthenShieldButon().setDisable(false);
+        view.getStrengthenShieldButton().setDisable(false);
 
     }
 
@@ -75,7 +75,7 @@ public class Controller {
         logAction("Player chose to collect 20 resources.");
     }
 
-    public static void repairShield(){
+    public static void strengthenShield(){
         GameAction repairAction = new StrengthenShieldAction(player.getNation(), 15);
         player.addAction(repairAction);
         logAction("Player chose to repair their shield by 15.");
