@@ -60,11 +60,10 @@ public class View {
             }
         });
 
-        // Add components to layout
         root.getChildren().addAll(greeting, response);
         root.setSpacing(30);
         root.setStyle("-fx-alignment: center; -fx-padding: 50;");
 
-        return new Scene(root);
+        return new Scene(root); //???
     }
 }
