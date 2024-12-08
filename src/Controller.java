@@ -29,7 +29,7 @@ public class Controller {
                 // Player's actions will be processed by WarSimulation's game loop
             }
         } else {
-            logAction("Player has already selected maximum actions for this turn.");
+            logAction("[SYSTEM] Player has already selected maximum actions for this turn.");
         }
     }
 
@@ -72,34 +72,34 @@ public class Controller {
     public static void collectResources(){
         GameAction collectAction = new CollectResourcesAction(player.getNation(), 20);
         player.addAction(collectAction);
-        logAction("Player chose to collect 20 resources.");
+        logAction("[SYSTEM] Player chose to collect 20 resources.");
     }
 
     public static void strengthenShield(){
         GameAction repairAction = new StrengthenShieldAction(player.getNation(), 15);
         player.addAction(repairAction);
-        logAction("Player chose to repair their shield by 15.");
+        logAction("[SYSTEM] Player chose to repair their shield by 15.");
     }
 
     public static void recruitSoldiers(){
         GameAction recruitAction = new RecruitSoldiersAction(player.getNation(), 10);
         player.addAction(recruitAction);
-        logAction("Player chose to recruit 10 soldiers.");
+        logAction("[SYSTEM] Player chose to recruit 10 soldiers.");
     }
 
     public static void buildNuke(){
         GameAction buildAction = new BuildNukeAction(player.getNation());
         player.addAction(buildAction);
-        logAction("Player chose to build a nuke.");
+        logAction("[SYSTEM] Player chose to build a nuke.");
     }
 
     public static void launchNuke(){
         if (player.getNation().getNumNukes() > 0) {
             GameAction launchAction = new LaunchNukeAction(player.getNation(), computer.getNation());
             player.addAction(launchAction);
-            logAction("Player chose to launch a nuke at Computer.");
+            logAction("[SYSTEM] Player chose to launch a nuke at Computer.");
         } else {
-            logAction("Player cannot launch a nuke (no nukes available).");
+            logAction("[SYSTEM] Player cannot launch a nuke (no nukes available).");
         }
     }
 }
