@@ -13,7 +13,7 @@ public class Nation {
         this.numNukes = 0;         // Starting number of nukes
         this.numSoldiers = 0;      // Starting number of soldiers
         this.resources = 100;      // Starting resources
-        this.shieldStrength = 0;   // Starting shield strength
+        this.shieldStrength = 100;   // Starting shield strength
     }
 
     public String getName() {

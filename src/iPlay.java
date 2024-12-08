@@ -1,4 +1,6 @@
+import java.util.List;
+
 interface iPlay {
-    GameAction chooseAction(); 
+    List<GameAction> chooseAction(); 
     Nation getNation();  
 }
