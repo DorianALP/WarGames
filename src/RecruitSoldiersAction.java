@@ -8,8 +8,7 @@ public class RecruitSoldiersAction extends GameAction {
 
     // targetNation not applicable in this action, can be null;
     @Override
-    public void execute(Nation targetNation) {
-        nation.recruitSoldiers(numberToRecruit);
-        System.out.println(nation.getName() + " recruited " + numberToRecruit + " soldiers. Total soldiers: " + nation.getNumSoldiers());
+    public String execute(Nation targetNation) {
+        return nation.recruitSoldiers(numberToRecruit);
     }
 }

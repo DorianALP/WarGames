@@ -1,6 +1,4 @@
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.scene.Scene;
 
 public class Controller {
     private static View view;
@@ -8,25 +6,22 @@ public class Controller {
     private static Computer computer;
     private WarSimulation warSimulation;
 
-    private VBox mainLayout;
+    public Controller(Stage stage, View v, Player p, Computer c) 
+    {
+        view = v;
+        player = p;
+        computer = c;
 
-    public Controller(Stage stage) {
         warSimulation = new WarSimulation(player, computer, this);
-
-        // Set up the scene
-        Scene gameScene = new Scene(mainLayout, 1000, 500);
-        stage.setScene(gameScene);
-        stage.show();
 
         // Start the game loop
         warSimulation.startGame(stage);
     }
 
-     // Handles adding an action and executing turns if MAX_ACTIONS is reached.
+    // Handles adding an action and executing turns if MAX_ACTIONS is reached.
     public static void handleAction(Runnable action) {
         if (player.getActionCount() < player.MAX_ACTIONS) {
             action.run();
-            updateLabels();
 
             if (player.getActionCount() == player.MAX_ACTIONS) {
                 // Disable buttons until Computer's turn is complete
@@ -40,7 +35,6 @@ public class Controller {
 
     // Logs messages to the game log UI component.
     public static void logAction(String message) {
-        System.out.println(message); // Console log
         view.getGameLog().appendText(message + "\n"); // UI log
     }
 

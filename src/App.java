@@ -5,7 +5,11 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) {
-        View view = new View(stage);
+        Nation playerNation = new Nation("America");
+        Nation computerNation = new Nation("Russia");
+        Player player = new Player(playerNation);
+        Computer computer = new Computer(computerNation, player);
+        View view = new View(stage, player, computer);
 
         // Stage setup
         stage.setTitle("WarGames Startup");
