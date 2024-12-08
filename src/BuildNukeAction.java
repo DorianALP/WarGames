@@ -5,9 +5,7 @@ class BuildNukeAction extends GameAction {
     }
 
     @Override
-    public void execute(Nation target) {
-        nation.buildNuke();
-        System.out.println(nation.getName() + " built a nuke!");
-
+    public String execute(Nation target) {
+        return nation.buildNuke();
     }
 }
