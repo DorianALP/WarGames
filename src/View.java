@@ -80,13 +80,19 @@ public class View {
         response.setStyle("-fx-text-fill: limegreen; -fx-font-size: 35px; -fx-font-family: 'Monospaced';");
         response.setFocusTraversable(false);
 
+        Timeline cursorBlink = new Timeline(new KeyFrame(Duration.seconds(0.5), e -> {
+            if (response.getPromptText().isEmpty()) response.setPromptText("Type Y or N and press ENTER...");
+            else response.setPromptText("");
+        }));
+        cursorBlink.setCycleCount(Animation.INDEFINITE);
+        cursorBlink.play();
+
         response.setOnKeyReleased(e -> {
             if (e.getCode().toString().equals("ENTER")) {
                 if (response.getText().trim().equalsIgnoreCase("Y")) {
-                    showGameRules();
-                } else if (response.getText().trim().equalsIgnoreCase("N")) {
-                    stage.close();
-                }
+                    fadeToGameRules();
+                    cursorBlink.stop();
+                } else if (response.getText().trim().equalsIgnoreCase("N")) stage.close();
             }
         });
 
@@ -95,35 +101,48 @@ public class View {
         stage.setScene(new Scene(root));
         stage.show();
     }
+    
+    // --- FADE TRANSITION TO GAME RULES ---
+    private void fadeToGameRules() {
+        FadeTransition fadeOut = new FadeTransition(Duration.seconds(1), stage.getScene().getRoot());
+        fadeOut.setFromValue(1);
+        fadeOut.setToValue(0);
+        fadeOut.setOnFinished(e -> showGameRules());
+        fadeOut.play();
+    }
 
     // --- GAME RULES SCREEN ---
     private void showGameRules() {
         VBox root = new VBox(20);
+        root.setPadding(new Insets(20));
         root.setAlignment(Pos.CENTER);
         root.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, null, null)));
 
-        Label title = new Label("Game Rules");
-        title.setFont(Font.font("Monospaced", 40));
-        title.setTextFill(Color.DARKGREEN);
+        Label rulesTitle = new Label("Game Rules");
+        rulesTitle.setFont(Font.font("Monospaced", 40));
+        rulesTitle.setTextFill(Color.DARKGREEN);
 
-        TextArea rules = new TextArea(
-            "Goal: Reduce the opponent's health to 0.\n" +
-            "\nActions:\n" +
-            "1. Collect Resources: +20 resources (Free)\n" +
-            "2. Recruit Soldiers: Costs 100 resources\n" +
-            "3. Build Nuke: Costs 50 resources\n" +
-            "4. Launch Nuke: Deals 50 damage (Requires 1 nuke)\n\n" +
-            "You can take 2 actions per turn. Good luck!"
+        TextArea rulesText = new TextArea(
+                "Welcome to WarGames!\n\n" +
+                "Your goal is to defeat the opposing nation by reducing their health to 0.\n\n" +
+                "Actions and Costs:\n" +
+                "- Collect Resources: +20 resources (Free)\n" +
+                "- Recruit Soldiers: 10 soldiers for 100 resources\n" +
+                "- Build Nuke: 1 nuke for 50 resources\n" +
+                "- Launch Nuke: Deals 50 damage (Requires 1 nuke)\n\n" +
+                "Each turn, you can take up to 2 actions. The game alternates between you and the computer.\n" +
+                "Make wise choices and watch your health, soldiers, and resources!"
         );
-        rules.setWrapText(true);
-        rules.setEditable(false);
-        rules.setStyle("-fx-control-inner-background: white; -fx-text-fill: black;");
-        rules.setPrefHeight(300);
+        rulesText.setWrapText(true);
+        rulesText.setEditable(false);
+        rulesText.setPrefHeight(300);
+        rulesText.setStyle("-fx-control-inner-background: #F5F5F5; -fx-text-fill: black;");
 
-        Button startGameButton = new Button("Start Game");
+        Button startGameButton = new Button("Fight!");
+        startGameButton.setFont(Font.font(20));
         startGameButton.setOnAction(e -> createGameScreen());
 
-        root.getChildren().addAll(title, rules, startGameButton);
+        root.getChildren().addAll(rulesTitle, rulesText, startGameButton);
         stage.setScene(new Scene(root, 1000, 600));
     }
 
