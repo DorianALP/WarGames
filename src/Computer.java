@@ -1,8 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
 
-import javafx.scene.control.ProgressBar;
-
 public class Computer implements iPlay {
 
     private Nation nation;
