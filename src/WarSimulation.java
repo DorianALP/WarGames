@@ -21,36 +21,27 @@ public class WarSimulation {
     }
 
     void startGame(Stage stage) {
-        Pane p = new Pane();
-        Scene s = new Scene(p, 1000, 500);
-        stage.setScene(s);
-        stage.setFullScreen(true);
-
         // Create a Timeline for the game loop
         gameLoop = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
             if(isPlayersTurn) {
                 // Player's Turn
-                List<GameAction> playerActions = player.chooseAction();
-                for (GameAction action : playerActions) {
-                    action.execute(computer.getNation());
-                    if (computer.getNation().isDefeated()) {
-                        System.out.println("Player wins!");
-                        stopGame(gameLoop);
-                        break;
+                if(player.getActionCount() == 2) {
+                    List<GameAction> playerActions = player.chooseAction();
+                    for (GameAction action : playerActions) {
+                        action.execute(computer.getNation());
+                        if (computer.getNation().isDefeated()) {
+                            System.out.println("Player wins!");
+                            stopGame(gameLoop);
+                            return;
+                        }
                     }
-                }
 
-                if (computer.getNation().isDefeated()) {
-                    System.out.println("Player wins!");
-                    stopGame(gameLoop);
-                    return;
-                }
+                    player.resetTurnCount();
 
-                player.resetTurnCount();
+                    updateUI();
 
-                updateUI();
-
-                isPlayersTurn = false;
+                    isPlayersTurn = false;
+                } 
 
             } else {
 
@@ -61,14 +52,8 @@ public class WarSimulation {
                     if (player.getNation().isDefeated()) {
                         System.out.println("Computer wins!");
                         stopGame(gameLoop);
-                        break;
+                        return;
                     }
-                }
-
-                if (player.getNation().isDefeated()) {
-                    System.out.println("Computer wins!");
-                    stopGame(gameLoop);
-                    return;
                 }
 
                 // Reset action counts for the next turn

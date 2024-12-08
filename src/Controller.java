@@ -118,6 +118,7 @@ public class Controller {
         Scene gameScene = new Scene(mainLayout, 1000, 500);
         stage.setScene(gameScene);
         stage.show();
+        stage.requestFocus();
 
         // Start the game loop
         warSimulation.startGame(stage);

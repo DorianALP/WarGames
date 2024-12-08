@@ -31,7 +31,8 @@ public class App extends Application{
         scene.setOnKeyReleased(e -> {
             if(e.getCode().equals(KeyCode.ENTER)) {
                 if(response.getText().equals("Y")) {
-                    new Controller(stage);
+                    Controller c = new Controller(stage);
+                    View v = new View();
                 } else if (response.getText().equals("N")) {
                     stage.close();
                 }
