@@ -7,9 +7,7 @@ class LaunchNukeAction extends GameAction {
     }
 
     @Override
-    public void execute(Nation targetNation) {
-        nation.launchNuke(this.target);
-        System.out.println(nation.getName() + " launched a nuke at " + target.getName());
-
+    public String execute(Nation targetNation) {
+        return nation.launchNuke(this.target);
     }
 }

@@ -7,9 +7,7 @@ class StrengthenShieldAction extends GameAction {
     }
 
     @Override
-    public void execute(Nation targetNation) {
-        nation.strengthenShield(amount);
-        System.out.println(nation.getName() + " strengthened their shield to " + nation.getShieldStrength());
-
+    public String execute(Nation targetNation) {
+        return nation.strengthenShield(amount);
     }
 }

@@ -1,21 +1,50 @@
-import javafx.animation.*;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.DropShadow;
-import javafx.scene.layout.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.HBox;
+
+import javafx.animation.Animation;
+import javafx.animation.FadeTransition;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.geometry.Insets;
 
 public class View {
+    private Button collectResourcesButton;
+    private Button recruitSoldiersButton;
+    private Button buildNukeButton;
+    private Button launchNukeButton;
+    private TextArea gameLog;
+    private Label playerResourcesLabel;
+    private Label playerSoldiersLabel;
+    private Label computerResourcesLabel;
+    private Label computerSoldiersLabel;
+    private VBox mainLayout;
+    private Player player;
+    private Computer computer;
 
-    public Scene createStartupScreen(Stage stage) {
+    public View(Stage stage, Player player, Computer computer) {
+        this.player = player;
+        this.computer = computer;
         // Layout setup
         VBox root = new VBox(20);
         root.setBackground(new Background(new BackgroundFill(Color.BLACK, null, null)));
         root.setPrefSize(1000, 500);
+
+        // Setup the scene
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
 
         // Greeting Label
         Label greeting = new Label("HELLO JOSHUA.\nWOULD YOU LIKE TO PLAY A GAME?\nY/N?");
@@ -48,11 +77,12 @@ public class View {
 
         // Event handling for ENTER key
         response.setOnKeyReleased(e -> {
-            if (e.getCode().toString().equals("ENTER")) { // Trigger only on ENTER key
+            if (e.getCode() == KeyCode.ENTER) { // Trigger only on ENTER key
                 String input = response.getText().trim().toUpperCase();
                 switch (input) { // Convert input to uppercase
                     case "Y":
-                        new Controller(stage); // Start the game
+                        createGame(stage);
+                        new Controller(stage, this, player, computer); // Start the game
                         cursorBlink.stop();
                         break;
                     case "N":
@@ -66,6 +96,119 @@ public class View {
         root.setSpacing(30);
         root.setStyle("-fx-alignment: center; -fx-padding: 50;");
 
-        return new Scene(root); //???
+    }
+    
+    public void createGame(Stage stage) {
+        // Initialize UI components
+        collectResourcesButton = new Button("Collect Resources");
+        recruitSoldiersButton = new Button("Recruit Soldiers");
+        buildNukeButton = new Button("Build Nuke");
+        launchNukeButton = new Button("Launch Nuke");
+    
+        gameLog = new TextArea();
+        gameLog.setEditable(false);
+        gameLog.setPrefHeight(200);
+    
+        playerResourcesLabel = new Label("Player Resources: " + player.getNation().getResources());
+        playerSoldiersLabel = new Label("Player Soldiers: " + player.getNation().getNumSoldiers());
+        computerResourcesLabel = new Label("Computer Resources: " + computer.getNation().getResources());
+        computerSoldiersLabel = new Label("Computer Soldiers: " + computer.getNation().getNumSoldiers());
+    
+        // Layout setup
+        mainLayout = new VBox(10);
+        mainLayout.setPadding(new Insets(20));
+        Scene scene = new Scene(mainLayout, 1000, 500);
+        stage.setScene(scene);
+    
+        // Player Info
+        VBox playerInfo = new VBox(5);
+        playerInfo.getChildren().addAll(
+            new Label("Player Nation: " + player.getNation().getName()),
+            playerResourcesLabel,
+            playerSoldiersLabel
+        );
+    
+        // Computer Info
+        VBox computerInfo = new VBox(5);
+        computerInfo.getChildren().addAll(
+            new Label("Computer Nation: " + computer.getNation().getName()),
+            computerResourcesLabel,
+            computerSoldiersLabel
+        );
+    
+        // Action Buttons
+        HBox actionButtons = new HBox(10);
+        actionButtons.getChildren().addAll(
+            collectResourcesButton,
+            recruitSoldiersButton,
+            buildNukeButton,
+            launchNukeButton
+        );
+    
+        // Add all components to main layout
+        mainLayout.getChildren().addAll(
+            playerInfo,
+            actionButtons,
+            computerInfo,
+            new Label("Game Log:"),
+            gameLog
+        );
+
+        collectResourcesButton.setOnAction(e -> Controller.handleAction(() -> {
+            Controller.collectResources();
+        }));
+
+        recruitSoldiersButton.setOnAction(e -> Controller.handleAction(() -> {
+            Controller.recruitSoldiers();
+        }));
+
+        buildNukeButton.setOnAction(e -> Controller.handleAction(() -> {
+            Controller.buildNuke();
+        }));
+
+        launchNukeButton.setOnAction(e -> Controller.handleAction(() -> {
+            Controller.launchNuke();
+        }));
+    }
+    
+    // Getters for UI componentsnb  
+    public VBox getMainLayout() {
+        return mainLayout;
+    }
+    
+    public Button getCollectResourcesButton() {
+        return collectResourcesButton;
+    }
+    
+    public Button getRecruitSoldiersButton() {
+        return recruitSoldiersButton;
+    }
+    
+    public Button getBuildNukeButton() {
+        return buildNukeButton;
+    }
+    
+    public Button getLaunchNukeButton() {
+        return launchNukeButton;
+    }
+    
+    public TextArea getGameLog() {
+        return gameLog;
+    }
+    
+    public Label getPlayerResourcesLabel() {
+        return playerResourcesLabel;
+    }
+    
+    public Label getPlayerSoldiersLabel() {
+        return playerSoldiersLabel;
+    }
+    
+    public Label getComputerResourcesLabel() {
+        return computerResourcesLabel;
+    }
+    
+    public Label getComputerSoldiersLabel() {
+        return computerSoldiersLabel;
     }
 }
