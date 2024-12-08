@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 import javafx.animation.KeyFrame;
@@ -20,23 +21,24 @@ public class WarSimulation {
 
     void startGame(Stage stage) {
         // Create a Timeline for the game loop
-        gameLoop = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
+        gameLoop = new Timeline(new KeyFrame(Duration.seconds(0.1), e -> {
             // Update UI here to reflect changes
             updateUI();
+            
             if(isPlayersTurn) {
                 // Player's Turn
                 controller.enableActionButtons();
-                if(player.getActionCount() == 2) {
-                    List<GameAction> playerActions = player.chooseAction();
-                    for (GameAction action : playerActions) {
-                        Controller.logAction(action.execute(computer.getNation()));;
-                        if (computer.getNation().isDefeated()) {
-                            Controller.logAction("Player wins!");
-                            stopGame(gameLoop);
-                            return;
-                        }
+                List<GameAction> playerActions = new ArrayList<GameAction>(player.chooseAction());
+                for (GameAction action : playerActions) {
+                    Controller.logAction(action.execute(computer.getNation()));
+                    player.chooseAction().removeFirst();
+                    if (computer.getNation().isDefeated()) {
+                        Controller.logAction("Player wins!");
+                        stopGame(gameLoop);
+                        return;
                     }
-
+                }
+                if(player.getActionCount() == 2) {
                     // Reset action counts for the next turn
                     player.resetTurnCount();
 
