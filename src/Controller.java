@@ -20,8 +20,6 @@ public class Controller {
 
         // Start the game loop
         warSimulation.startGame(stage);
-
-        Scene startupScene = view.createStartupScreen(stage);
     }
 
      // Handles adding an action and executing turns if MAX_ACTIONS is reached.

@@ -5,7 +5,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) {
-        View view = new View();
+        View view = new View(stage);
 
         // Stage setup
         stage.setTitle("WarGames Startup");
