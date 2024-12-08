@@ -37,6 +37,10 @@ public class View {
         root.setBackground(new Background(new BackgroundFill(Color.BLACK, null, null)));
         root.setPrefSize(1000, 500);
 
+        // Setup the scene
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+
         // Greeting Label
         Label greeting = new Label("HELLO JOSHUA.\nWOULD YOU LIKE TO PLAY A GAME?\nY/N?");
         greeting.setTextFill(Color.LIMEGREEN);
