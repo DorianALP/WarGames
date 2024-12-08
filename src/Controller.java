@@ -18,6 +18,7 @@ public class Controller {
     private Label computerResourcesLabel;
     private Label computerSoldiersLabel;
 
+    private View view;
     private Player player;
     private Computer computer;
     private WarSimulation warSimulation;
@@ -32,20 +33,15 @@ public class Controller {
         computer = new Computer(computerNation, player);
         warSimulation = new WarSimulation(player, computer, this);
 
-        // Initialize UI components
-        collectResourcesButton = new Button("Collect Resources");
-        recruitSoldiersButton = new Button("Recruit Soldiers");
-        buildNukeButton = new Button("Build Nuke");
-        launchNukeButton = new Button("Launch Nuke");
+        view = new View(player, computer);
 
-        gameLog = new TextArea();
-        gameLog.setEditable(false);
-        gameLog.setPrefHeight(200);
+        // Set up the scene
+        Scene gameScene = new Scene(mainLayout, 1000, 500);
+        stage.setScene(gameScene);
+        stage.show();
 
-        playerResourcesLabel = new Label("Player Resources: " + player.getNation().getResources());
-        playerSoldiersLabel = new Label("Player Soldiers: " + player.getNation().getNumSoldiers());
-        computerResourcesLabel = new Label("Computer Resources: " + computer.getNation().getResources());
-        computerSoldiersLabel = new Label("Computer Soldiers: " + computer.getNation().getNumSoldiers());
+        // Start the game loop
+        warSimulation.startGame(stage);
 
         // Set up button actions
         collectResourcesButton.setOnAction(e -> handleAction(() -> {
@@ -75,52 +71,6 @@ public class Controller {
                 logAction("Player cannot launch a nuke (no nukes available).");
             }
         }));
-
-        // Layout setup
-        mainLayout = new VBox(10);
-        mainLayout.setPadding(new Insets(20));
-
-        // Player Info
-        VBox playerInfo = new VBox(5);
-        playerInfo.getChildren().addAll(
-            new Label("Player Nation: America"),
-            playerResourcesLabel,
-            playerSoldiersLabel
-        );
-
-        // Computer Info
-        VBox computerInfo = new VBox(5);
-        computerInfo.getChildren().addAll(
-            new Label("Computer Nation: Russia"),
-            computerResourcesLabel,
-            computerSoldiersLabel
-        );
-
-        // Action Buttons
-        HBox actionButtons = new HBox(10);
-        actionButtons.getChildren().addAll(
-            collectResourcesButton,
-            recruitSoldiersButton,
-            buildNukeButton,
-            launchNukeButton
-        );
-
-        // Add all components to main layout
-        mainLayout.getChildren().addAll(
-            playerInfo,
-            actionButtons,
-            computerInfo,
-            new Label("Game Log:"),
-            gameLog
-        );
-
-        // Set up the scene
-        Scene gameScene = new Scene(mainLayout, 1000, 500);
-        stage.setScene(gameScene);
-        stage.show();
-
-        // Start the game loop
-        warSimulation.startGame(stage);
     }
 
      // Handles adding an action and executing turns if MAX_ACTIONS is reached.
