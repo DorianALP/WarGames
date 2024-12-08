@@ -23,13 +23,19 @@ import javafx.geometry.Insets;
 public class View {
     private Button collectResourcesButton;
     private Button recruitSoldiersButton;
+    private Button strengthenShieldButton;
     private Button buildNukeButton;
     private Button launchNukeButton;
-    private TextArea gameLog;
+
     private Label playerResourcesLabel;
     private Label playerSoldiersLabel;
     private Label computerResourcesLabel;
     private Label computerSoldiersLabel;
+    private Label playerShieldLabel;
+    private Label computerShieldLabel;
+
+
+    private TextArea gameLog;
     private VBox mainLayout;
     private Player player;
     private Computer computer;
@@ -104,6 +110,7 @@ public class View {
         recruitSoldiersButton = new Button("Recruit Soldiers");
         buildNukeButton = new Button("Build Nuke");
         launchNukeButton = new Button("Launch Nuke");
+        strengthenShieldButton = new Button("Repair Shield");
     
         gameLog = new TextArea();
         gameLog.setEditable(false);
@@ -111,9 +118,12 @@ public class View {
     
         playerResourcesLabel = new Label("Player Resources: " + player.getNation().getResources());
         playerSoldiersLabel = new Label("Player Soldiers: " + player.getNation().getNumSoldiers());
+        playerShieldLabel = new Label("Player Shield Strength: " + player.getNation().getShieldStrength());
+        
         computerResourcesLabel = new Label("Computer Resources: " + computer.getNation().getResources());
         computerSoldiersLabel = new Label("Computer Soldiers: " + computer.getNation().getNumSoldiers());
-    
+        computerShieldLabel = new Label("Computer Shield Strength: " + computer.getNation().getShieldStrength());
+
         // Layout setup
         mainLayout = new VBox(10);
         mainLayout.setPadding(new Insets(20));
@@ -125,7 +135,8 @@ public class View {
         playerInfo.getChildren().addAll(
             new Label("Player Nation: " + player.getNation().getName()),
             playerResourcesLabel,
-            playerSoldiersLabel
+            playerSoldiersLabel,
+            playerShieldLabel
         );
     
         // Computer Info
@@ -133,7 +144,8 @@ public class View {
         computerInfo.getChildren().addAll(
             new Label("Computer Nation: " + computer.getNation().getName()),
             computerResourcesLabel,
-            computerSoldiersLabel
+            computerSoldiersLabel,
+            computerShieldLabel
         );
     
         // Action Buttons
@@ -142,7 +154,8 @@ public class View {
             collectResourcesButton,
             recruitSoldiersButton,
             buildNukeButton,
-            launchNukeButton
+            launchNukeButton,
+            strengthenShieldButton
         );
     
         // Add all components to main layout
@@ -169,6 +182,9 @@ public class View {
         launchNukeButton.setOnAction(e -> Controller.handleAction(() -> {
             Controller.launchNuke();
         }));
+        strengthenShieldButton.setOnAction(e -> Controller.handleAction(() -> {
+            Controller.repairShield();
+        }));
     }
     
     // Getters for UI componentsnb  
@@ -186,6 +202,10 @@ public class View {
     
     public Button getBuildNukeButton() {
         return buildNukeButton;
+    }
+
+    public Button getStrengthenShieldButon() {
+        return strengthenShieldButton;
     }
     
     public Button getLaunchNukeButton() {
