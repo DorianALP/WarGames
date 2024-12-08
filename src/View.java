@@ -4,6 +4,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -30,8 +31,12 @@ public class View {
     private Label computerResourcesLabel;
     private Label computerSoldiersLabel;
     private VBox mainLayout;
+    private Player player;
+    private Computer computer;
 
-    public View(Stage stage) {
+    public View(Stage stage, Player player, Computer computer) {
+        this.player = player;
+        this.computer = computer;
         // Layout setup
         VBox root = new VBox(20);
         root.setBackground(new Background(new BackgroundFill(Color.BLACK, null, null)));
@@ -72,12 +77,12 @@ public class View {
 
         // Event handling for ENTER key
         response.setOnKeyReleased(e -> {
-            if (e.getCode().toString().equals("ENTER")) { // Trigger only on ENTER key
+            if (e.getCode() == KeyCode.ENTER) { // Trigger only on ENTER key
                 String input = response.getText().trim().toUpperCase();
                 switch (input) { // Convert input to uppercase
                     case "Y":
-                        createGame();
-                        new Controller(stage); // Start the game
+                        createGame(stage);
+                        new Controller(stage, this, player, computer); // Start the game
                         cursorBlink.stop();
                         break;
                     case "N":
@@ -93,12 +98,7 @@ public class View {
 
     }
     
-    public void createGame() {
-        Nation playerNation = new Nation("America");
-        Nation computerNation = new Nation("Russia");
-        Player player = new Player(playerNation);
-        Computer computer = new Computer(computerNation, player);
-
+    public void createGame(Stage stage) {
         // Initialize UI components
         collectResourcesButton = new Button("Collect Resources");
         recruitSoldiersButton = new Button("Recruit Soldiers");
@@ -117,6 +117,8 @@ public class View {
         // Layout setup
         mainLayout = new VBox(10);
         mainLayout.setPadding(new Insets(20));
+        Scene scene = new Scene(mainLayout, 1000, 500);
+        stage.setScene(scene);
     
         // Player Info
         VBox playerInfo = new VBox(5);

@@ -5,5 +5,5 @@ abstract class GameAction {
         this.nation = nation;
     }
 
-    public abstract void execute(Nation target);
+    public abstract String execute(Nation target);
 }
