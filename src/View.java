@@ -1,4 +1,3 @@
-// View.java
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -87,6 +86,21 @@ public class View {
             gameLog
         );
 
+        collectResourcesButton.setOnAction(e -> Controller.handleAction(() -> {
+            Controller.collectResources();
+        }));
+
+        recruitSoldiersButton.setOnAction(e -> Controller.handleAction(() -> {
+            Controller.recruitSoldiers();
+        }));
+
+        buildNukeButton.setOnAction(e -> Controller.handleAction(() -> {
+            Controller.buildNuke();
+        }));
+
+        launchNukeButton.setOnAction(e -> Controller.handleAction(() -> {
+            Controller.launchNuke();
+        }));
     }
 
     public Scene createStartupScreen(Stage stage) {
@@ -146,23 +160,6 @@ public class View {
 
         return new Scene(root); //???
     }
-
-
-    collectResourcesButton.setOnAction(e -> handleAction(() -> {
-        collectResources();
-    }));
-
-    recruitSoldiersButton.setOnAction(e -> handleAction(() -> {
-        recruitSoldiers();
-    }));
-
-    buildNukeButton.setOnAction(e -> handleAction(() -> {
-        buildNuke();
-    }));
-
-    launchNukeButton.setOnAction(e -> handleAction(() -> {
-        launchNuke();
-    }));
     
     // Getters for UI components
     public VBox getMainLayout() {
