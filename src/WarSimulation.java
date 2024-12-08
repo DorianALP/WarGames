@@ -2,8 +2,6 @@ import java.util.List;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -31,9 +29,9 @@ public class WarSimulation {
                 if(player.getActionCount() == 2) {
                     List<GameAction> playerActions = player.chooseAction();
                     for (GameAction action : playerActions) {
-                        controller.logAction(action.execute(computer.getNation()));;
+                        Controller.logAction(action.execute(computer.getNation()));;
                         if (computer.getNation().isDefeated()) {
-                            controller.logAction("Player wins!");
+                            Controller.logAction("Player wins!");
                             stopGame(gameLoop);
                             return;
                         }
@@ -50,9 +48,9 @@ public class WarSimulation {
                 // Computer's Turn
                 List<GameAction> computerActions = computer.chooseAction();
                 for (GameAction action : computerActions) {
-                    controller.logAction(action.execute(player.getNation()));
+                    Controller.logAction(action.execute(player.getNation()));
                     if (player.getNation().isDefeated()) {
-                        controller.logAction("Computer wins!");
+                        Controller.logAction("Computer wins!");
                         stopGame(gameLoop);
                         return;
                     }
@@ -72,7 +70,7 @@ public class WarSimulation {
     private void updateUI() {
         // Implement UI update logic to reflect the current state of the game
         // e.g., update labels, progress bars, etc.
-        controller.updateLabels();
+        Controller.updateLabels();
     }
 
     private void stopGame(Timeline gameLoop) {
