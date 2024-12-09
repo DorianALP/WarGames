@@ -23,7 +23,7 @@ public class Controller {
         if (player.getActionCount() < player.MAX_ACTIONS) {
             action.run();
 
-            if (player.getActionCount() == player.MAX_ACTIONS) {
+            if (player.getActionCount() >= player.MAX_ACTIONS) {
                 // Disable buttons until Computer's turn is complete
                 disableActionButtons();
                 // Player's actions will be processed by WarSimulation's game loop
@@ -100,8 +100,8 @@ public class Controller {
         if (player.getNation().getNumSoldiers() >= soldiersToDeploy) {
             GameAction deployAction = new DeploySoldiersAction(player.getNation(), computer.getNation(), soldiersToDeploy);
             player.addAction(deployAction);
-            logAction(player.getNation().deploySoldiers(computer.getNation(), soldiersToDeploy));
-            view.updateUI(); // Update the health bar and labels
+            logAction("-----[SYSTEM] Soldiers deployed!-----");
+
         } else {
             logAction("-----[SYSTEM] Not enough soldiers to deploy!-----");
         }
@@ -122,8 +122,7 @@ public class Controller {
         if (player.getNation().getNumNukes() > 0) {
             GameAction launchAction = new LaunchNukeAction(player.getNation(), computer.getNation());
             player.addAction(launchAction);
-            logAction(player.getNation().launchNuke(computer.getNation()));
-            view.updateUI(); // Update the health bar and labels
+            logAction("-----[SYSTEM] Player launched a nuke.-----");
         } else {
             logAction("-----[SYSTEM] Player cannot launch a nuke (no nukes available).-----");
         }

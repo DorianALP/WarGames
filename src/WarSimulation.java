@@ -29,7 +29,7 @@ public class WarSimulation {
                 controller.enableActionButtons();
                 processPlayerTurn();
                 
-                if(player.getActionCount() == 2) {
+                if(player.getActionCount() >= 2) {
                     // Reset action counts for the next turn
                     player.resetTurnCount();
                     isPlayersTurn = false;
