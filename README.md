@@ -30,13 +30,16 @@ The computer should display "Thinking..." before making a move to simulate human
 
 3. Group Member Contributions
 
-Danny Philbrook
+Danny Philbrook:
+
 Game UI, Controller Logic, User Interaction
 
-Dorian Littlecook-Perez
+Dorian Littlecook-Perez:
+
 Computer AI Logic, Action Classes
 
-Cooper Nusbaum
+Cooper Nusbaum:
+
 Nation Class, Game Loop, Testing, Debugging
 
 
