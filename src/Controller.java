@@ -76,21 +76,44 @@ public class Controller {
     }
 
     public static void strengthenShield(){
-        GameAction repairAction = new StrengthenShieldAction(player.getNation(), 15);
-        player.addAction(repairAction);
-        logAction("-----[SYSTEM] Player chose to repair their shield by 15.-----");
+        if(player.getNation().getResources() >= 15) {
+            if(player.getNation().getShieldStrength() <= 85) {
+                GameAction repairAction = new StrengthenShieldAction(player.getNation(), 15);
+                player.addAction(repairAction);
+                logAction("-----[SYSTEM] Player chose to repair their shield by 15.-----");
+            } else if(player.getNation().getShieldStrength() > 85 && player.getNation().getShieldStrength() < 100) {
+                GameAction repairAction = new StrengthenShieldAction(player.getNation(), 100 - player.getNation().getShieldStrength());
+                player.addAction(repairAction);
+                logAction("-----[SYSTEM] Player chose to repair their shield.-----");
+            } else {
+                logAction("-----[SYSTEM] Player shield is already full.-----");
+
+            }
+        } else {
+            logAction("-----[SYSTEM] Player doesn't have the resources to strengthen shield.-----");
+        }
     }
 
     public static void recruitSoldiers(){
-        GameAction recruitAction = new RecruitSoldiersAction(player.getNation(), 10);
-        player.addAction(recruitAction);
-        logAction("-----[SYSTEM] Player chose to recruit 10 soldiers.-----");
+        if(player.getNation().getResources() >= 10) {
+            GameAction recruitAction = new RecruitSoldiersAction(player.getNation(), 10);
+            player.addAction(recruitAction);
+            logAction("-----[SYSTEM] Player chose to recruit 10 soldiers.-----");
+        } else {
+            logAction("-----[SYSTEM] Player doesn't have enough resources to recruit soldiers..-----");
+
+        }
     }
 
     public static void buildNuke(){
-        GameAction buildAction = new BuildNukeAction(player.getNation());
-        player.addAction(buildAction);
-        logAction("-----[SYSTEM] Player chose to build a nuke.-----");
+        if(player.getNation().getResources() >= 50) {
+            GameAction buildAction = new BuildNukeAction(player.getNation());
+            player.addAction(buildAction);
+            logAction("-----[SYSTEM] Player chose to build a nuke.-----");
+        } else {
+            logAction("-----[SYSTEM] Player doesn't have the resources to build a nuke.-----");
+
+        }
     }
 
     public static void launchNuke(){
