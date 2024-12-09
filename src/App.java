@@ -12,10 +12,10 @@ public class App extends Application {
         Computer computer = new Computer(computerNation, player);
 
         View view = new View(stage, player, computer);
-        Controller controller = new Controller(stage, view, player, computer);
+        Controller _ = new Controller(stage, view, player, computer);
 
         // Link the Controller to the View
-        view.setController(controller);
+        view.setController();
 
         // Stage setup
         stage.setTitle("WarGames Startup");

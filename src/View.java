@@ -22,7 +22,6 @@ public class View {
     private Stage stage;
     private Player player;
     private Computer computer;
-    private Controller controller;
 
     public View(Stage stage, Player player, Computer computer) {
         this.stage = stage;
@@ -33,16 +32,14 @@ public class View {
         createStartupScreen();
     }
 
-    public void setController(Controller controller) {
-        this.controller = controller;
-
+    public void setController() {
         // Attach actions to buttons with Controller logic
-        collectResourcesButton.setOnAction(e -> Controller.handleAction(() -> Controller.collectResources()));
-        recruitSoldiersButton.setOnAction(e -> Controller.handleAction(() -> Controller.recruitSoldiers()));
-        buildNukeButton.setOnAction(e -> Controller.handleAction(() -> Controller.buildNuke()));
-        launchNukeButton.setOnAction(e -> Controller.handleAction(() -> Controller.launchNuke()));
-        deploySoldiersButton.setOnAction(e -> Controller.handleAction(() -> Controller.deploySoldiers()));
-        strengthenShieldButton.setOnAction(e -> Controller.handleAction(() -> Controller.strengthenShield()));
+        collectResourcesButton.setOnAction(_ -> Controller.handleAction(() -> Controller.collectResources()));
+        recruitSoldiersButton.setOnAction(_ -> Controller.handleAction(() -> Controller.recruitSoldiers()));
+        buildNukeButton.setOnAction(_ -> Controller.handleAction(() -> Controller.buildNuke()));
+        launchNukeButton.setOnAction(_ -> Controller.handleAction(() -> Controller.launchNuke()));
+        deploySoldiersButton.setOnAction(_ -> Controller.handleAction(() -> Controller.deploySoldiers()));
+        strengthenShieldButton.setOnAction(_ -> Controller.handleAction(() -> Controller.strengthenShield()));
     }
 
     // Initialize UI Components
@@ -87,7 +84,7 @@ public class View {
         response.setStyle("-fx-text-fill: limegreen; -fx-font-size: 35px; -fx-font-family: 'Monospaced';");
         response.setFocusTraversable(false);
 
-        Timeline cursorBlink = new Timeline(new KeyFrame(Duration.seconds(0.5), e -> {
+        Timeline cursorBlink = new Timeline(new KeyFrame(Duration.seconds(0.5), _ -> {
             if (response.getPromptText().isEmpty()) response.setPromptText("Type Y or N and press ENTER...");
             else response.setPromptText("");
         }));
@@ -114,7 +111,7 @@ public class View {
         FadeTransition fadeOut = new FadeTransition(Duration.seconds(1), stage.getScene().getRoot());
         fadeOut.setFromValue(1);
         fadeOut.setToValue(0);
-        fadeOut.setOnFinished(e -> showGameRules());
+        fadeOut.setOnFinished(_ -> showGameRules());
         fadeOut.play();
     }
 
@@ -147,7 +144,7 @@ public class View {
 
         Button startGameButton = new Button("Fight!");
         startGameButton.setFont(Font.font(20));
-        startGameButton.setOnAction(e -> createGameScreen());
+        startGameButton.setOnAction(_ -> createGameScreen());
 
         root.getChildren().addAll(rulesTitle, rulesText, startGameButton);
         stage.setScene(new Scene(root, 1000, 600));
@@ -216,7 +213,7 @@ public class View {
         winnerLabel.setTextFill(Color.DARKGREEN);
     
         Button exitButton = new Button("Exit");
-        exitButton.setOnAction(e -> stage.close());
+        exitButton.setOnAction(_ -> stage.close());
     
         gameOverLayout.getChildren().addAll(gameOverLabel, winnerLabel, exitButton);
     

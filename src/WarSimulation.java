@@ -20,7 +20,7 @@ public class WarSimulation {
 
     void startGame(Stage stage) {
         // Create a Timeline for the game loop
-        gameLoop = new Timeline(new KeyFrame(Duration.seconds(0.1), e -> {
+        gameLoop = new Timeline(new KeyFrame(Duration.seconds(0.1), _ -> {
             // Update UI here to reflect changes
             controller.getView().updateUI(); // Update UI every tick
             
@@ -73,7 +73,7 @@ public class WarSimulation {
 
     private void stopGame() {
         gameLoop.stop();
-        controller.logAction("Game Over!");
+        Controller.logAction("Game Over!");
         controller.getView().showGameOverScreen(
             player.getNation().isDefeated() ? "Computer Wins!" : "Player Wins!"
         );
