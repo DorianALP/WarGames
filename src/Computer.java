@@ -35,8 +35,9 @@ public class Computer implements iPlay {
     private List<GameAction> think() {
         List<GameAction> actions = new ArrayList<>();
 
-        // Simulated state sariables so the computer can figure out best move. 
+        // Simulated state variables so the computer can figure out best move.
         // Keeping track of AI resources without affecting the game.
+        // * This solved the issue where computer was attempting to perform actions that were not possible * 
         int simulatedResources = nation.getResources();
         int simulatedNukes = nation.getNumNukes();
         int simulatedSoldiers = nation.getNumSoldiers();
