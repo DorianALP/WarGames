@@ -27,20 +27,11 @@ public class WarSimulation {
             if(isPlayersTurn) { //meep
                 // Player's Turn
                 controller.enableActionButtons();
-                List<GameAction> playerActions = new ArrayList<GameAction>(player.chooseAction());
-                for (GameAction action : playerActions) {
-                    Controller.logAction(action.execute(computer.getNation()));
-                    player.chooseAction().removeFirst();
-                    if (computer.getNation().isDefeated()) {
-                        Controller.logAction("Player wins!");
-                        stopGame(gameLoop);
-                        return;
-                    }
-                }
+                
                 if(player.getActionCount() == 2) {
                     // Reset action counts for the next turn
                     player.resetTurnCount();
-
+                    processPlayerTurn();
                     isPlayersTurn = false;
                 }
             } else {
@@ -55,9 +46,10 @@ public class WarSimulation {
     }
 
     private void processPlayerTurn() {
-        List<GameAction> playerActions = player.chooseAction();
+        List<GameAction> playerActions = new ArrayList<GameAction>(player.chooseAction());
         for (GameAction action : playerActions) {
             Controller.logAction(action.execute(computer.getNation()));
+            player.chooseAction().removeFirst();
             if (computer.getNation().isDefeated()) {
                 Controller.logAction("Player wins!");
                 stopGame();
