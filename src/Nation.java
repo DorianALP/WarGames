@@ -7,6 +7,10 @@ public class Nation {
     private int resources;
     private int shieldStrength;
 
+    private int shieldCost = 20;
+    private int nukeCost = 50;
+    private int soldierCost = 10;
+
     public Nation(String name) {
         this.name = name;
         this.health = 100;         // Starting health
@@ -42,7 +46,6 @@ public class Nation {
 
     // Method to build a nuke
     public String buildNuke() {
-        int nukeCost = 50;  // Cost to build a nuke
         if (resources >= nukeCost) {
             numNukes++;
             resources -= nukeCost;
@@ -54,11 +57,9 @@ public class Nation {
 
     // Method to recruit soldiers
     public String recruitSoldiers(int number) {
-        int soldierCost = 1;  // Cost per soldier
-        int totalCost = number * soldierCost;
-        if (resources >= totalCost) {
+        if (resources >= soldierCost) {
             numSoldiers += number;
-            resources -= totalCost;
+            resources -= soldierCost;
             return name + " recruited " + number + " soldiers. Total soldiers: " + numSoldiers;
         } else {
             return name + " doesn't have enough resources to recruit soldiers.";
@@ -91,11 +92,9 @@ public class Nation {
 
     // Method to strengthen the nation's shield
     public String strengthenShield(int amount) {
-        int shieldCost = 5;  // Cost per shield point
-        int totalCost = amount * shieldCost;
-        if (resources >= totalCost) {
+        if (resources >= shieldCost) {
             shieldStrength += amount;
-            resources -= totalCost;
+            resources -= shieldCost;
             return name + " increased shield strength by " + amount + ". Total shield: " + shieldStrength;
         } else {
             return name + " doesn't have enough resources to strengthen the shield.";
@@ -109,8 +108,7 @@ public class Nation {
     }
 
     // Method to handle receiving damage
-    public String receiveDamage(int damage) {
-        String ret = "";
+    public void receiveDamage(int damage) {
         int effectiveDamage = damage;
 
         // Shield absorbs damage first
@@ -118,7 +116,6 @@ public class Nation {
             int shieldAbsorb = Math.min(shieldStrength, damage);
             shieldStrength -= shieldAbsorb;
             effectiveDamage -= shieldAbsorb;
-            ret += name + "'s shield absorbed " + shieldAbsorb + " damage.\n";
         }
 
         // Remaining damage reduces health
@@ -126,9 +123,6 @@ public class Nation {
         if (health < 0) {
             health = 0;
         }
-
-        ret += name + " took " + effectiveDamage + " damage. Remaining health: " + health;
-        return ret;
     }
 
     // Method to check if the nation is defeated

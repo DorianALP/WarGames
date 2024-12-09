@@ -15,8 +15,8 @@
             "name": "App",
             "request": "launch",
             "mainClass": "App",
-            "projectName": "WarGames_d25c03c7",
-            "vmArgs": "--module-path C:\\Code\\Java\\javafx-sdk-21.0.5\\lib --add-modules javafx.controls,javafx.fxml --enable-preview"
+            "projectName": "WarGames_b5d88006",
+            "vmArgs": "--module-path C:\\Users\\Coop\\Documents\\javafx-sdk-22.0.2\\lib --add-modules javafx.controls,javafx.fxml --enable-preview"
         }
     ]
 }
