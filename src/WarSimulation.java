@@ -70,13 +70,12 @@ public class WarSimulation {
     }
 
     private void updateUI() {
-        // Implement UI update logic to reflect the current state of the game
-        // e.g., update labels, progress bars, etc.
+        // UI update logic to reflect the current state of the game
         Controller.updateLabels();
     }
 
     private void stopGame(Timeline gameLoop) {
         gameLoop.stop();
-        // show a dialog or navigate to a game-over screen
+        // Maybe show a dialog or navigate to a game-over screen
     }
 }
