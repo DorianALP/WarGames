@@ -13,7 +13,7 @@ public class Player implements iPlay {
 
     @Override
     public List<GameAction> chooseAction() {
-        return new ArrayList<>(actions);
+        return this.actions;
     }
 
     @Override
