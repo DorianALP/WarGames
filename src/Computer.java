@@ -36,33 +36,70 @@ public class Computer implements iPlay {
         List<GameAction> actions = new ArrayList<>();
         int chance = r.nextInt(10);
 
-        // Recruit soldiers on the first turn
-        if (firstTurn && actionCount < MAX_ACTIONS && chance < 5) {
-            actions.add(new RecruitSoldiersAction(nation, 5));
+        //Build nukes on the first turn
+        if (firstTurn) {
+            actions.add(new BuildNukeAction(nation));
+            actions.add(new BuildNukeAction(nation));
             firstTurn = false;
-            actionCount++;
+            actionCount = 2;
         }
 
         // Loop to pick two actions per turn
         while (actionCount < MAX_ACTIONS) {
-            if (nation.getHealth() >= player.getNation().getHealth() && chance < 8 || chance > 7 && nation.getHealth() <= player.getNation().getHealth()) {
-                if (nation.getNumNukes() > 0) {
+            actionCount++;
+            //No resource actions
+            if (nation.getResources() <= 0) {
+                if (nation.getNumNukes() > 0 && chance < 9) {
                     actions.add(new LaunchNukeAction(nation, player.getNation()));
-                } else if (nation.getResources() >= 50) { // Assuming 50 resources to build a nuke
+                } else if (nation.getNumSoldiers() > 0 && chance < 4) {
+                    actions.add(new DeploySoldiersAction(nation, player.getNation(), 10));
+                } else {
+                    actions.add(new CollectResourcesAction(nation, 20));
+                }
+                continue;
+            }
+
+            //Low health high resource actions
+            if (nation.getHealth() <= 50) {
+                if (nation.getResources() >= 75 && chance < 5) {
+                    actions.add(new StrengthenShieldAction(nation, 15));
+                } else if (nation.getResources() >= 50 && chance < 5) {
+                    actions.add(new BuildNukeAction(nation));
+                } else if (nation.getResources() >= 10 && chance < 5) {
+                    actions.add(new RecruitSoldiersAction(nation, 10));
+                }
+
+                //Low health violence
+                if (nation.getNumNukes() > 0 && chance > 4) {
+                    actions.add(new LaunchNukeAction(nation, player.getNation()));
+                } else if (nation.getNumSoldiers() > 0 && chance > 4) {
+                    actions.add(new DeploySoldiersAction(nation, player.getNation(), 10));
+                } else {
+                    actions.add(new CollectResourcesAction(nation, 20));
+                }
+                continue;
+            }
+
+            //High resource actions
+            if (nation.getResources() >= 50) {
+                if (chance < 8) {
                     actions.add(new BuildNukeAction(nation));
                 } else {
-                    actions.add(new CollectResourcesAction(nation, 10)); // Collect additional resources
+                    actions.add(new RecruitSoldiersAction(nation, 10));
                 }
-            } else {
-                if (nation.getShieldStrength() <= 25) {
-                    actions.add(new StrengthenShieldAction(nation, 15));
-                } else {
-                    actions.add(new DeploySoldiersAction(nation, player.getNation(), 5));
-                }
+                continue;
             }
-            actionCount++;
-        }
 
+            //Unload nukes and soldiers
+            if (nation.getNumNukes() > 0) {
+                actions.add(new LaunchNukeAction(nation, player.getNation()));
+            } else if (nation.getNumSoldiers() > 0) {
+                actions.add(new DeploySoldiersAction(nation, player.getNation(), 10));
+            } else {
+                actions.add(new CollectResourcesAction(nation, 20));
+            }
+        }
+        resetTurnCount();
         return actions;
     }
 }
