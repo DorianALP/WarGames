@@ -91,7 +91,7 @@ public class Nation {
 
     // Method to strengthen the nation's shield
     public String strengthenShield(int amount) {
-        int shieldCost = 5;  // Cost per shield point
+        int shieldCost = 1;  // Cost per shield point
         int totalCost = amount * shieldCost;
         if (resources >= totalCost) {
             shieldStrength += amount;
