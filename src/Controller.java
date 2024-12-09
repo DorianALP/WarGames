@@ -56,6 +56,7 @@ public class Controller {
         view.getRecruitSoldiersButton().setDisable(true);
         view.getBuildNukeButton().setDisable(true);
         view.getLaunchNukeButton().setDisable(true);
+        view.getDeploySoldiersButtons().setDisable(true);
         view.getStrengthenShieldButton().setDisable(true);
     }
 
@@ -65,6 +66,7 @@ public class Controller {
         view.getRecruitSoldiersButton().setDisable(false);
         view.getBuildNukeButton().setDisable(false);
         view.getLaunchNukeButton().setDisable(false);
+        view.getDeploySoldiersButtons().setDisable(false);
         view.getStrengthenShieldButton().setDisable(false);
 
     }
@@ -85,6 +87,18 @@ public class Controller {
         GameAction recruitAction = new RecruitSoldiersAction(player.getNation(), 10);
         player.addAction(recruitAction);
         logAction("-----[SYSTEM] Player chose to recruit 10 soldiers.-----");
+    }
+
+    public static void deploySoldiers() {
+        int soldiersToDeploy = 10; // Fixed soldiers deployed
+        if (player.getNation().getNumSoldiers() >= soldiersToDeploy) {
+            GameAction deployAction = new DeploySoldiersAction(player.getNation(), computer.getNation(), soldiersToDeploy);
+            player.addAction(deployAction);
+            logAction(player.getNation().deploySoldiers(computer.getNation(), soldiersToDeploy));
+            updateLabels();
+        } else {
+            logAction("Not enough soldiers to deploy!");
+        }
     }
 
     public static void buildNuke(){
