@@ -22,7 +22,7 @@ public class WarSimulation {
         // Create a Timeline for the game loop
         gameLoop = new Timeline(new KeyFrame(Duration.seconds(0.1), e -> {
             // Update UI here to reflect changes
-            updateUI();
+            controller.getView().updateUI(); // Update UI every tick
             
             if(isPlayersTurn) { //meep
                 // Player's Turn
