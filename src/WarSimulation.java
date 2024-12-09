@@ -73,7 +73,6 @@ public class WarSimulation {
 
     private void stopGame() {
         gameLoop.stop();
-        controller.logAction("Game Over!");
         controller.getView().showGameOverScreen(
             player.getNation().isDefeated() ? "Computer Wins!" : "Player Wins!"
         );

@@ -134,7 +134,8 @@ public class View {
                 "Your goal is to defeat the opposing nation by reducing their health to 0.\n\n" +
                 "Actions and Costs:\n" +
                 "- Collect Resources: +20 resources (Free)\n" +
-                "- Recruit Soldiers: 10 soldiers for 100 resources\n" +
+                "- Recruit Soldiers: 10 soldiers for 10 resources\n" +
+                "- Strengthen Shield: 15 shield for 20 resources\n" +
                 "- Build Nuke: 1 nuke for 50 resources\n" +
                 "- Launch Nuke: Deals 50 damage (Requires 1 nuke)\n\n" +
                 "Each turn, you can take up to 2 actions. The game alternates between you and the computer.\n" +
@@ -275,7 +276,5 @@ public class View {
     public Label getPlayerShieldLabel() {
         return playerShieldLabel;
     }
-
-    
 }
 
