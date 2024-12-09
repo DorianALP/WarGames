@@ -27,11 +27,11 @@ public class WarSimulation {
             if(isPlayersTurn) { //meep
                 // Player's Turn
                 controller.enableActionButtons();
+                processPlayerTurn();
                 
                 if(player.getActionCount() == 2) {
                     // Reset action counts for the next turn
                     player.resetTurnCount();
-                    processPlayerTurn();
                     isPlayersTurn = false;
                 }
             } else {
@@ -56,7 +56,6 @@ public class WarSimulation {
                 return;
             }
         }
-        player.resetTurnCount();
     }
 
     private void processComputerTurn() {
