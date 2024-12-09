@@ -190,13 +190,35 @@ public class View {
         playerSoldiersLabel.setText("Soldiers: " + player.getNation().getNumSoldiers());
         playerShieldLabel.setText("Shield: " + player.getNation().getShieldStrength());
         playerHealthBar.setProgress(player.getNation().getHealth() / 100.0);
-
+    
         computerHealthLabel.setText("Health: " + computer.getNation().getHealth());
         computerResourcesLabel.setText("Resources: " + computer.getNation().getResources());
         computerSoldiersLabel.setText("Soldiers: " + computer.getNation().getNumSoldiers());
         computerShieldLabel.setText("Shield: " + computer.getNation().getShieldStrength());
         computerHealthBar.setProgress(computer.getNation().getHealth() / 100.0);
+    }
 
+    public void showGameOverScreen(String winnerMessage) {
+        VBox gameOverLayout = new VBox(20);
+        gameOverLayout.setAlignment(Pos.CENTER);
+        gameOverLayout.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, null, null)));
+    
+        Label gameOverLabel = new Label("Game Over");
+        gameOverLabel.setFont(Font.font("Monospaced", 50));
+        gameOverLabel.setTextFill(Color.DARKRED);
+    
+        Label winnerLabel = new Label(winnerMessage);
+        winnerLabel.setFont(Font.font("Monospaced", 30));
+        winnerLabel.setTextFill(Color.DARKGREEN);
+    
+        Button exitButton = new Button("Exit");
+        exitButton.setOnAction(e -> stage.close());
+    
+        gameOverLayout.getChildren().addAll(gameOverLabel, winnerLabel, exitButton);
+    
+        Scene gameOverScene = new Scene(gameOverLayout, 1000, 600);
+        stage.setScene(gameOverScene);
+        stage.show();
     }
 
     public TextArea getGameLog() {

@@ -38,18 +38,6 @@ public class Controller {
         view.getGameLog().appendText(message + "\n"); // UI log
     }
 
-    // Updates the UI labels to reflect the current game state.
-    public static void updateLabels() {
-        view.getPlayerResourcesLabel().setText("Player Resources: " + player.getNation().getResources());
-        view.getPlayerSoldiersLabel().setText("Player Soldiers: " + player.getNation().getNumSoldiers());
-        view.getPlayerShieldLabel().setText("Player Shield: " + player.getNation().getShieldStrength());
-
-        view.getComputerResourcesLabel().setText("Computer Resources: " + computer.getNation().getResources());
-        view.getComputerSoldiersLabel().setText("Computer Soldiers: " + computer.getNation().getNumSoldiers());
-        view.getComputerShieldLabel().setText("Computer Shield: " + computer.getNation().getShieldStrength());
-    }
-
-
     // Disables all action buttons to prevent further actions until the Computer's turn is complete.
     private static void disableActionButtons() {
         view.getCollectResourcesButton().setDisable(true);
@@ -95,9 +83,9 @@ public class Controller {
             GameAction deployAction = new DeploySoldiersAction(player.getNation(), computer.getNation(), soldiersToDeploy);
             player.addAction(deployAction);
             logAction(player.getNation().deploySoldiers(computer.getNation(), soldiersToDeploy));
-            updateLabels();
+            view.updateUI(); // Update the health bar and labels
         } else {
-            logAction("Not enough soldiers to deploy!");
+            logAction("-----[SYSTEM] Not enough soldiers to deploy!-----");
         }
     }
 
@@ -107,13 +95,19 @@ public class Controller {
         logAction("-----[SYSTEM] Player chose to build a nuke.-----");
     }
 
-    public static void launchNuke(){
+    public static void launchNuke() {
         if (player.getNation().getNumNukes() > 0) {
             GameAction launchAction = new LaunchNukeAction(player.getNation(), computer.getNation());
             player.addAction(launchAction);
-            logAction("-----[SYSTEM] Player chose to launch a nuke at Computer.-----");
+            logAction(player.getNation().launchNuke(computer.getNation()));
+            view.updateUI(); // Update the health bar and labels
         } else {
             logAction("-----[SYSTEM] Player cannot launch a nuke (no nukes available).-----");
         }
+    }
+
+    // Getter for View
+    public View getView() {
+        return view;
     }
 }
