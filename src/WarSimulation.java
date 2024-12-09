@@ -25,7 +25,7 @@ public class WarSimulation {
             // Update UI here to reflect changes
             updateUI();
             
-            if(isPlayersTurn) {
+            if(isPlayersTurn) { //meep
                 // Player's Turn
                 controller.enableActionButtons();
                 List<GameAction> playerActions = new ArrayList<GameAction>(player.chooseAction());
