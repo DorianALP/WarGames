@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class View {
-    private Button collectResourcesButton, recruitSoldiersButton, buildNukeButton, launchNukeButton, strengthenShieldButton;
+    private Button collectResourcesButton, recruitSoldiersButton, buildNukeButton, launchNukeButton, deploySoldiersButton, strengthenShieldButton;
     private TextArea gameLog;
 
     private Label playerHealthLabel, playerResourcesLabel, playerSoldiersLabel, playerShieldLabel;
@@ -41,6 +41,7 @@ public class View {
         recruitSoldiersButton.setOnAction(e -> Controller.handleAction(() -> Controller.recruitSoldiers()));
         buildNukeButton.setOnAction(e -> Controller.handleAction(() -> Controller.buildNuke()));
         launchNukeButton.setOnAction(e -> Controller.handleAction(() -> Controller.launchNuke()));
+        deploySoldiersButton.setOnAction(e -> Controller.handleAction(() -> Controller.deploySoldiers()));
         strengthenShieldButton.setOnAction(e -> Controller.handleAction(() -> Controller.strengthenShield()));
     }
 
@@ -50,6 +51,7 @@ public class View {
         recruitSoldiersButton = new Button("Recruit Soldiers");
         buildNukeButton = new Button("Build Nuke");
         launchNukeButton = new Button("Launch Nuke");
+        deploySoldiersButton = new Button("Deploy Soldiers");
         strengthenShieldButton = new Button("Strengthen Shield");
 
         playerHealthBar = new ProgressBar(1);
@@ -159,7 +161,7 @@ public class View {
         VBox playerBox = createNationBox("Player Nation: America", playerHealthBar, playerHealthLabel, playerResourcesLabel, playerSoldiersLabel, playerShieldLabel);
         VBox computerBox = createNationBox("Computer Nation: Russia", computerHealthBar, computerHealthLabel, computerResourcesLabel, computerSoldiersLabel, computerShieldLabel);
 
-        HBox buttonBox = new HBox(10, collectResourcesButton, recruitSoldiersButton, buildNukeButton, launchNukeButton, strengthenShieldButton);
+        HBox buttonBox = new HBox(10, collectResourcesButton, recruitSoldiersButton, deploySoldiersButton, buildNukeButton, launchNukeButton, strengthenShieldButton);
         buttonBox.setAlignment(Pos.CENTER);
 
         root.setLeft(playerBox);
@@ -188,13 +190,35 @@ public class View {
         playerSoldiersLabel.setText("Soldiers: " + player.getNation().getNumSoldiers());
         playerShieldLabel.setText("Shield: " + player.getNation().getShieldStrength());
         playerHealthBar.setProgress(player.getNation().getHealth() / 100.0);
-
+    
         computerHealthLabel.setText("Health: " + computer.getNation().getHealth());
         computerResourcesLabel.setText("Resources: " + computer.getNation().getResources());
         computerSoldiersLabel.setText("Soldiers: " + computer.getNation().getNumSoldiers());
         computerShieldLabel.setText("Shield: " + computer.getNation().getShieldStrength());
         computerHealthBar.setProgress(computer.getNation().getHealth() / 100.0);
+    }
 
+    public void showGameOverScreen(String winnerMessage) {
+        VBox gameOverLayout = new VBox(20);
+        gameOverLayout.setAlignment(Pos.CENTER);
+        gameOverLayout.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, null, null)));
+    
+        Label gameOverLabel = new Label("Game Over");
+        gameOverLabel.setFont(Font.font("Monospaced", 50));
+        gameOverLabel.setTextFill(Color.DARKRED);
+    
+        Label winnerLabel = new Label(winnerMessage);
+        winnerLabel.setFont(Font.font("Monospaced", 30));
+        winnerLabel.setTextFill(Color.DARKGREEN);
+    
+        Button exitButton = new Button("Exit");
+        exitButton.setOnAction(e -> stage.close());
+    
+        gameOverLayout.getChildren().addAll(gameOverLabel, winnerLabel, exitButton);
+    
+        Scene gameOverScene = new Scene(gameOverLayout, 1000, 600);
+        stage.setScene(gameOverScene);
+        stage.show();
     }
 
     public TextArea getGameLog() {
@@ -219,6 +243,10 @@ public class View {
 
     public Button getLaunchNukeButton() {
         return launchNukeButton;
+    }
+
+    public Button getDeploySoldiersButtons(){
+        return deploySoldiersButton;
     }
 
     public Label getPlayerResourcesLabel() {

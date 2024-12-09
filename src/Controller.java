@@ -38,24 +38,13 @@ public class Controller {
         view.getGameLog().appendText(message + "\n"); // UI log
     }
 
-    // Updates the UI labels to reflect the current game state.
-    public static void updateLabels() {
-        view.getPlayerResourcesLabel().setText("Player Resources: " + player.getNation().getResources());
-        view.getPlayerSoldiersLabel().setText("Player Soldiers: " + player.getNation().getNumSoldiers());
-        view.getPlayerShieldLabel().setText("Player Shield: " + player.getNation().getShieldStrength());
-
-        view.getComputerResourcesLabel().setText("Computer Resources: " + computer.getNation().getResources());
-        view.getComputerSoldiersLabel().setText("Computer Soldiers: " + computer.getNation().getNumSoldiers());
-        view.getComputerShieldLabel().setText("Computer Shield: " + computer.getNation().getShieldStrength());
-    }
-
-
     // Disables all action buttons to prevent further actions until the Computer's turn is complete.
     private static void disableActionButtons() {
         view.getCollectResourcesButton().setDisable(true);
         view.getRecruitSoldiersButton().setDisable(true);
         view.getBuildNukeButton().setDisable(true);
         view.getLaunchNukeButton().setDisable(true);
+        view.getDeploySoldiersButtons().setDisable(true);
         view.getStrengthenShieldButton().setDisable(true);
     }
 
@@ -65,6 +54,7 @@ public class Controller {
         view.getRecruitSoldiersButton().setDisable(false);
         view.getBuildNukeButton().setDisable(false);
         view.getLaunchNukeButton().setDisable(false);
+        view.getDeploySoldiersButtons().setDisable(false);
         view.getStrengthenShieldButton().setDisable(false);
 
     }
@@ -105,6 +95,18 @@ public class Controller {
         }
     }
 
+    public static void deploySoldiers() {
+        int soldiersToDeploy = 10; // Fixed soldiers deployed
+        if (player.getNation().getNumSoldiers() >= soldiersToDeploy) {
+            GameAction deployAction = new DeploySoldiersAction(player.getNation(), computer.getNation(), soldiersToDeploy);
+            player.addAction(deployAction);
+            logAction(player.getNation().deploySoldiers(computer.getNation(), soldiersToDeploy));
+            view.updateUI(); // Update the health bar and labels
+        } else {
+            logAction("-----[SYSTEM] Not enough soldiers to deploy!-----");
+        }
+    }
+
     public static void buildNuke(){
         if(player.getNation().getResources() >= 50) {
             GameAction buildAction = new BuildNukeAction(player.getNation());
@@ -116,13 +118,19 @@ public class Controller {
         }
     }
 
-    public static void launchNuke(){
+    public static void launchNuke() {
         if (player.getNation().getNumNukes() > 0) {
             GameAction launchAction = new LaunchNukeAction(player.getNation(), computer.getNation());
             player.addAction(launchAction);
-            logAction("-----[SYSTEM] Player chose to launch a nuke at Computer.-----");
+            logAction(player.getNation().launchNuke(computer.getNation()));
+            view.updateUI(); // Update the health bar and labels
         } else {
             logAction("-----[SYSTEM] Player cannot launch a nuke (no nukes available).-----");
         }
+    }
+
+    // Getter for View
+    public View getView() {
+        return view;
     }
 }

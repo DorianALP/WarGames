@@ -54,7 +54,7 @@ public class Nation {
 
     // Method to recruit soldiers
     public String recruitSoldiers(int number) {
-        int soldierCost = 10;  // Cost per soldier
+        int soldierCost = 1;  // Cost per soldier
         int totalCost = number * soldierCost;
         if (resources >= totalCost) {
             numSoldiers += number;
@@ -81,7 +81,7 @@ public class Nation {
     public String deploySoldiers(Nation target, int soldiersToDeploy) {
         if (numSoldiers >= soldiersToDeploy) {
             numSoldiers -= soldiersToDeploy;
-            int damage = soldiersToDeploy * 2;  // Damage per soldier
+            int damage = 10;  // Damage per soldier
             target.receiveDamage(damage);
             return name + " deployed " + soldiersToDeploy + " soldiers to attack " + target.getName();
         } else {
