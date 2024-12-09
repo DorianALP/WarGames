@@ -151,6 +151,8 @@ public class View {
 
         root.getChildren().addAll(rulesTitle, rulesText, startGameButton);
         stage.setScene(new Scene(root, 1000, 600));
+        stage.setFullScreen(true);
+        stage.setFullScreenExitHint("");
     }
 
     // --- GAME SCREEN ---
@@ -170,6 +172,8 @@ public class View {
         root.setBottom(buttonBox);
 
         stage.setScene(new Scene(root, 1000, 600));
+        stage.setFullScreen(true);
+        stage.setFullScreenExitHint("");
         stage.show();
     }
 
